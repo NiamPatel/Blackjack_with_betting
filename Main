@@ -1,0 +1,83 @@
+import random  #imports the random to be used in the prpgram
+
+smart, correct, number_of_question = 0, 0, input(
+  "how many questions do you want: "
+)  #set the varibles smart, correct and number of questions to 0, 0, and the input for how many questions.
+op_wrong = []
+wrong = []
+
+
+def frequent(op_wrong, tf):  #checks for the most frequent item in a list
+  counter = 0
+  if len(op_wrong) > 0:
+    out = op_wrong[0]
+    if tf == True:
+      for i in op_wrong:
+        frequency = op_wrong.count(i)
+        if (frequency > counter):  # set the most frequent item
+          counter = frequency
+          out = i
+    elif tf == False:
+      counter = len(op_wrong) + 1
+      for i in op_wrong:
+        frequency = op_wrong.count(i)
+        if (frequency < counter):  # set the least frequent item
+          counter = frequency
+          out = i
+  else:
+    out = "none"
+
+  return out
+
+
+def equation(random_number1, random_number2,
+             operator):  #creates function with three agurments.
+  if random_number2 == 0:
+    random_number2 = random_number2 + 1
+  if operator == 2:  # checks what to set operator for.
+    answer, sign = random_number1 // random_number2, '//'  #the math problem.
+  elif operator == 3:
+    answer, sign = random_number1 % random_number2, '%'  #the math problem.
+  elif operator == 4:
+    answer, sign = random_number1 + random_number2, '+'  #the math problem.
+  else:
+    answer, sign = random_number1 * random_number2, '*'  #the math problem.
+  question = input(
+    str(random_number1) + " " + str(sign) + " " + str(random_number2) +
+    " : ")  #tell the user the qestion.
+
+  if str(question) == str(answer):  #if correct.
+    print("you good at math")
+    count = True
+  else:  #if wrong
+    print("That is incorrect, the correct answer is " + str(answer) + "\n" +
+          "You also may have enter a non number.")
+    count = False
+
+    wrong.append(
+      str(random_number1) + " " + str(sign) + " " + str(random_number2) +
+      " : ")  #stores wrong answers in a list.
+
+    op_wrong.append(sign)
+  return count  #returns count to be used for the counter.
+
+
+for i in range(int(number_of_question)):  #how many questions
+  number_1 = random.randint(-25, 25)  #first random number.
+  smart = equation(number_1, random.randint(-25, number_1),
+                   random.randint(1, 5))  #second random number and operator.
+  if smart:  #counter 
+    correct = correct + 1
+  print("you got", correct, "out of", i + 1, "correct")  #how many correct
+  # Program to find most frequent
+# element in a list
+
+print()
+print()
+print(
+  "The questions you got wrong are: ", wrong,
+  "the operator you had the most troube with is: ",
+  frequent(op_wrong, True) +
+  ". The operation you have the easiest time with is: " +
+  frequent(op_wrong, False)
+)  #this piece of code takes the data from the list's wrong and op_wrong and prints the result
